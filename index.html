@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PoultryVision AI | Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body class="auth-page">
+  <div class="auth-wrapper">
+    <div class="hero-side">
+      <div class="brand-pill"><span class="badge-dot"></span><span>Smart Poultry Dashboard</span></div>
+      <h1 class="display-5 fw-bold mb-3">AI Chicken Disease Detection System</h1>
+      <p class="lead text-white-50 mb-4">HTML, CSS, JavaScript only. Lightweight local JSON-style data, beautiful Bootstrap UI, SweetAlert2 feedback, and role-based login.</p>
+      <ul class="highlight-list list-unstyled">
+        <li><i class="bi bi-check2-circle me-2"></i>Admin, Analyst, Viewer accounts</li>
+        <li><i class="bi bi-check2-circle me-2"></i>MobileNet training and browser prediction</li>
+        <li><i class="bi bi-check2-circle me-2"></i>Elegant dashboard clean modern admin dashboard</li>
+      </ul>
+    </div>
+    <div class="auth-card">
+      <h2 class="fw-bold mb-2">Sign in</h2>
+      <p class="small-note mb-4">Use the demo accounts below or create a new one.</p>
+      <form id="loginForm" class="mb-4">
+        <div class="mb-3">
+          <label class="form-label">Username or Email</label>
+          <div class="input-group"><span class="input-group-text"><i class="bi bi-person"></i></span><input class="form-control" id="username" required></div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <div class="input-group"><span class="input-group-text"><i class="bi bi-lock"></i></span><input class="form-control" id="password" type="password" required></div>
+        </div>
+        <button class="btn btn-primary w-100 rounded-pill">Login now</button>
+      </form>
+      <div class="alert alert-primary-subtle rounded-4 border-0">
+        <div><strong>Admin:</strong> admin / admin123</div>
+        <div><strong>Analyst:</strong> analyst / analyst123</div>
+        <div><strong>Viewer:</strong> user / user123</div>
+      </div>
+      <div class="text-center">No account? <a href="register.html" class="fw-semibold text-decoration-none">Create one</a></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="js/seed-data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    bootstrapData();
+    const current = getCurrentUser();
+    if (current) window.location.href = 'dashboard.html';
+
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const res = login(document.getElementById('username').value.trim(), document.getElementById('password').value.trim());
+      if (!res.ok) return Swal.fire({ icon: 'error', title: 'Login failed', text: res.message });
+      Swal.fire({ icon: 'success', title: 'Welcome', text: `Karibu ${res.user.fullName}` }).then(() => {
+        window.location.href = 'dashboard.html';
+      });
+    });
+  </script>
+</body>
+</html>
